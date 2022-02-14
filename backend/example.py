@@ -9,6 +9,7 @@ async def send_by_email_after_registration(request):
     await a.send_by_email_after_registration("artm-porjad@mail.ru")
     return JSONResponse({'Спасибо за регистрацию'})
 
+
 async def homepage(request):
     return JSONResponse({'hello': 'world'})
 
