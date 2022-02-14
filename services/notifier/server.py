@@ -8,22 +8,36 @@ import logging
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 
 
+def get_bool_envar(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    if value.upper() in ['Y', 'YES', 'TRUE', '1']:
+        return True
+    elif value.upper() in ['N', 'NO', 'FALSE', '0']:
+        return False
+    else:
+        raise ValueError(f"Invalid value of ${name}")
+
+
 class NotifierServer():
     def __init__(self, port: int):
         ctx = zmq.asyncio.Context()
         self.socket = ctx.socket(zmq.REP)
         self.socket.bind("tcp://*:%s" % port)
         logging.info(f'listen on 0.0.0.0:{port}')
+        mail_tls = get_bool_envar('MAIL_TLS')
+        mail_ssl = get_bool_envar('MAIL_SSL')
 
         self.conf = ConnectionConfig(
-            MAIL_USERNAME='12312312qwerq@gmail.com',
-            MAIL_PASSWORD='1qaz2wsx.',
-            MAIL_FROM='12312312qwerq@gmail.com',
-            MAIL_PORT='587',
-            MAIL_SERVER='smtp.gmail.com',
-            MAIL_FROM_NAME='Clowns Entertainment',
-            MAIL_TLS=True,
-            MAIL_SSL=False,
+            MAIL_USERNAME=os.environ["MAIL_USERNAME"],
+            MAIL_PASSWORD=os.environ["MAIL_PASSWORD"],
+            MAIL_FROM=os.environ["MAIL_FROM"],
+            MAIL_PORT=int(os.environ["MAIL_PORT"]),
+            MAIL_SERVER=os.environ["MAIL_SERVER"],
+            MAIL_FROM_NAME=os.environ["MAIL_FROM_NAME"],
+            MAIL_TLS=mail_tls,
+            MAIL_SSL=mail_ssl,
             USE_CREDENTIALS=True,
         )
         self.fm = FastMail(self.conf)

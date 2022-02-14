@@ -1,0 +1,28 @@
+version: '3.2'
+
+networks:
+  clowns-entertainment:
+    external: true
+
+services:
+  notifier:
+    environment:
+      PORT: ${PORT-9900}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_FROM: ${MAIL_FROM}
+      MAIL_PORT: ${MAIL_PORT-587}
+      MAIL_SERVER: ${MAIL_SERVER}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+      MAIL_TLS: ${MAIL_TLS-True}
+      MAIL_SSL: ${MAIL_SSL-False}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      ID_TELEGRAM_GROUPS: ${ID_TELEGRAM_GROUPS}
+    build:
+      context: .
+      dockerfile: system/docker/notifier/Dockerfile
+    container_name: clowns-entartainment-notifier
+    networks:
+      - clowns-entertainment
+    ports:
+      - "${PORT-9900}:${PORT-9900}"
