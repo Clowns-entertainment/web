@@ -1,0 +1,10 @@
+HOST=notificator
+PORT=9900
+MAIL_USERNAME=12312312qwerq@gmail.com
+MAIL_PASSWORD=1qaz2wsx.
+MAIL_FROM=12312312qwerq@gmail.com
+MAIL_PORT=587
+MAIL_SERVER=smtp.gmail.com
+MAIL_FROM_NAME=Clowns Entertainment
+MAIL_TLS=True
+MAIL_SSL=False
