@@ -16,8 +16,6 @@ services:
       MAIL_FROM_NAME: ${MAIL_FROM_NAME}
       MAIL_TLS: ${MAIL_TLS-True}
       MAIL_SSL: ${MAIL_SSL-False}
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      ID_TELEGRAM_GROUPS: ${ID_TELEGRAM_GROUPS}
     build:
       context: .
       dockerfile: system/docker/notifier/Dockerfile
