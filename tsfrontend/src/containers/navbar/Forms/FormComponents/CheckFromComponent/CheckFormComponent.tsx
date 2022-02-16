@@ -4,7 +4,7 @@ import { defineMessage, useIntl } from 'react-intl';
 
 const msgCheck = defineMessage({ defaultMessage: 'Check me out' });
 
-export default function CheckFormComponent() {
+function CheckFormComponent() {
   const intlCheck = useIntl();
 
   return (
@@ -13,3 +13,5 @@ export default function CheckFormComponent() {
     </Form.Group>
   );
 }
+
+export default CheckFormComponent;

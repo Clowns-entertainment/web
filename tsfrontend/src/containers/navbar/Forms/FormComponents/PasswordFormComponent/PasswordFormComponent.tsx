@@ -4,7 +4,7 @@ import { defineMessage, FormattedMessage, useIntl } from 'react-intl';
 
 const msgEnterPassword = defineMessage({ defaultMessage: 'Enter your password' });
 
-export default function PasswordFormComponent() {
+function PasswordFormComponent() {
   const intlPassword = useIntl();
 
   return (
@@ -16,3 +16,5 @@ export default function PasswordFormComponent() {
     </Form.Group>
   );
 }
+
+export default PasswordFormComponent;
