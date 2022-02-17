@@ -2,17 +2,25 @@ import React, { ReactNode } from 'react';
 import { Form } from 'react-bootstrap';
 import { defineMessage, FormattedMessage, useIntl } from 'react-intl';
 
-const msgEnterLogin = defineMessage({ defaultMessage: 'Enter your login' });
+const msgEnterUsername = defineMessage({ defaultMessage: 'Enter your username' });
 
-function LoginFormComponent() {
-  const intlLogin = useIntl();
+function LoginFormComponent(setUsername: any, username: any) {
+  const intlUsername = useIntl();
 
   return (
     <Form.Group className="mb-3" controlId="formBasicLogin">
       <Form.Label>
         <FormattedMessage defaultMessage={'{login}'} values={{ login: (chunks: ReactNode) => '{chunks}' }} />
       </Form.Label>
-      <Form.Control type="text" placeholder={intlLogin.formatMessage(msgEnterLogin)} name="login" />
+      <Form.Control
+        type="text"
+        placeholder={intlUsername.formatMessage(msgEnterUsername)}
+        name="username"
+        value={username}
+        onChange={(event) => {
+          setUsername(event.target.value);
+        }}
+      />
     </Form.Group>
   );
 }
