@@ -9,7 +9,8 @@ async def JsonParams(request: Request):
     """ Helps to use parameters received in JSON body.
     """
     try:
-        params = await request.json()
+        params = await request.form()
+        print(params)
         yield params
     except (AttributeError, KeyError, ValueError) as exc:
         msg = f"Bad request parameters. {exc}"
