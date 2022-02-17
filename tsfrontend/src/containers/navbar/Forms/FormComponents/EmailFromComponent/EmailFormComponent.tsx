@@ -4,7 +4,7 @@ import { defineMessage, FormattedMessage, useIntl } from 'react-intl';
 
 const msgEnterEmail = defineMessage({ defaultMessage: 'Enter your email' });
 
-export default function EmailFormComponent() {
+function EmailFormComponent() {
   const intlEmail = useIntl();
 
   return (
@@ -19,3 +19,5 @@ export default function EmailFormComponent() {
     </Form.Group>
   );
 }
+
+export default EmailFormComponent;

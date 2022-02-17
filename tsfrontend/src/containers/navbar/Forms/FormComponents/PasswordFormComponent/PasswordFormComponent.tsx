@@ -4,7 +4,7 @@ import { defineMessage, FormattedMessage, useIntl } from 'react-intl';
 
 const msgEnterPassword = defineMessage({ defaultMessage: 'Enter your password' });
 
-export default function PasswordFormComponent() {
+function PasswordFormComponent(setPassword: any, password: any) {
   const intlPassword = useIntl();
 
   return (
@@ -12,7 +12,17 @@ export default function PasswordFormComponent() {
       <Form.Label>
         <FormattedMessage defaultMessage={'{password}'} values={{ password: (chunks: ReactNode) => '{chunks}' }} />
       </Form.Label>
-      <Form.Control type="password" placeholder={intlPassword.formatMessage(msgEnterPassword)} name="password" />
+      <Form.Control
+        type="password"
+        placeholder={intlPassword.formatMessage(msgEnterPassword)}
+        name="password"
+        value={password}
+        onChange={(event) => {
+          setPassword(event.target.value);
+        }}
+      />
     </Form.Group>
   );
 }
+
+export default PasswordFormComponent;
