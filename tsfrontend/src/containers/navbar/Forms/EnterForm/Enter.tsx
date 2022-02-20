@@ -1,26 +1,27 @@
-import React, { ReactNode, useState } from 'react';
+import React from 'react';
 import { Form } from 'react-bootstrap';
-// import LoginFormComponent from '../FormComponents/LoginFormComponent/';
-// import PasswordFormComponent from '../FormComponents/PasswordFormComponent/';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import CheckFormComponent from '../FormComponents/CheckFromComponent/';
 import ButtonFormComponent from '../FormComponents/ButtonFromComponent';
-import { defineMessage, FormattedMessage, useIntl } from 'react-intl';
+import UsernameFormComponent from '../FormComponents/UsernameFormComponent';
+import PasswordFormComponent from '../FormComponents/PasswordFormComponent';
+import { Navigate } from 'react-router-dom';
+import UserContext from '../../../UserContext/UserContext';
 
-const msgEnterPassword = defineMessage({ defaultMessage: 'Enter your password' });
-const msgEnterUsername = defineMessage({ defaultMessage: 'Enter your username' });
+type Inputs = {
+  Nickname: string;
+  Password: string;
+  Check: boolean;
+};
 
 function Enter() {
-  const intlPassword = useIntl();
-  const intlUsername = useIntl();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const formSend = (event: any) => {
+  const { register, handleSubmit } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (formData, event) => {
     const data = new FormData();
-    data.append('password', password);
-    data.append('username', username);
-    // data.append("img", img);
-
+    data.append('password', formData['Password']);
+    data.append('nickname', formData['Nickname']);
+    // @ts-ignore
+    data.append('remember_me', formData['Check']);
     fetch('/api/login', {
       method: 'POST',
       body: data,
@@ -28,6 +29,7 @@ function Enter() {
       .then((resp) => {
         if (resp.status === 200) {
           console.log('Логин и пароль верны');
+          document.location.reload();
         } else {
           console.log('Логин или пароль не верны');
         }
@@ -36,42 +38,22 @@ function Enter() {
         document.location.reload();
         console.error(err);
       });
+    // @ts-ignore
     event.preventDefault();
   };
-  return (
-    <Form onSubmit={formSend}>
-      <Form.Group className="mb-3" controlId="formBasicLogin">
-        <Form.Label>
-          <FormattedMessage defaultMessage={'{login}'} values={{ login: (chunks: ReactNode) => '{chunks}' }} />
-        </Form.Label>
-        <Form.Control
-          type="text"
-          placeholder={intlUsername.formatMessage(msgEnterUsername)}
-          name="username"
-          value={username}
-          onChange={(event) => {
-            setUsername(event.target.value);
-          }}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>
-          <FormattedMessage defaultMessage={'{password}'} values={{ password: (chunks: ReactNode) => '{chunks}' }} />
-        </Form.Label>
-        <Form.Control
-          type="password"
-          placeholder={intlPassword.formatMessage(msgEnterPassword)}
-          name="password"
-          value={password}
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
-        />
-      </Form.Group>
-      <CheckFormComponent />
-      <ButtonFormComponent />
-    </Form>
-  );
+  // @ts-ignore
+  const { userContext } = React.useContext(UserContext);
+  if (userContext.isAuthorized) return <Navigate to="/" replace />;
+  else {
+    return (
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <UsernameFormComponent register={register} />
+        <PasswordFormComponent register={register} />
+        <CheckFormComponent register={register} />
+        <ButtonFormComponent />
+      </Form>
+    );
+  }
 }
 
 export default Enter;
