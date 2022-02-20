@@ -1,7 +1,10 @@
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import React from 'react';
+import UserContext from '../UserContext/UserContext';
 
-export default function NavbarView() {
+function NavbarView() {
+  // @ts-ignore
+  const { userContext } = React.useContext(UserContext);
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -17,12 +20,20 @@ export default function NavbarView() {
               <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Nav>
-            <Nav.Link href="/registration">Регистрация</Nav.Link>
-            <Nav.Link href="/enter">Вход</Nav.Link>
-          </Nav>
+          {userContext.isAuthorized ? (
+            <Nav>
+              <Nav.Link href="/exit">Выход</Nav.Link>
+            </Nav>
+          ) : (
+            <Nav>
+              <Nav.Link href="/registration">Регистрация</Nav.Link>
+              <Nav.Link href="/enter">Вход</Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
+
+export default NavbarView;

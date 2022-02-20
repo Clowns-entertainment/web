@@ -4,25 +4,22 @@ import { defineMessage, FormattedMessage, useIntl } from 'react-intl';
 
 const msgEnterUsername = defineMessage({ defaultMessage: 'Enter your username' });
 
-function LoginFormComponent(setUsername: any, username: any) {
+// @ts-ignore
+function UsernameFormComponent({ register }) {
   const intlUsername = useIntl();
 
   return (
     <Form.Group className="mb-3" controlId="formBasicLogin">
       <Form.Label>
-        <FormattedMessage defaultMessage={'{login}'} values={{ login: (chunks: ReactNode) => '{chunks}' }} />
+        <FormattedMessage defaultMessage={'{username}'} values={{ username: (chunks: ReactNode) => '{chunks}' }} />
       </Form.Label>
       <Form.Control
         type="text"
         placeholder={intlUsername.formatMessage(msgEnterUsername)}
-        name="username"
-        value={username}
-        onChange={(event) => {
-          setUsername(event.target.value);
-        }}
+        {...register('Nickname', { required: true, maxLength: 15, min: 3 })}
       />
     </Form.Group>
   );
 }
 
-export default LoginFormComponent;
+export default UsernameFormComponent;

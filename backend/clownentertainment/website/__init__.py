@@ -1,6 +1,9 @@
 from starlette.applications import Starlette
 from starlette.routing import Route, Mount
-from clownentertainment.website import example, users
+from clownentertainment.website import users
+from starlette.middleware import Middleware
+from starlette.middleware.authentication import AuthenticationMiddleware
+import utils
 
 
 class Application(Starlette):
@@ -8,10 +11,14 @@ class Application(Starlette):
     """
 
     def __init__(self):
-        Starlette.__init__(self, routes = [
+        middleware = [
+            Middleware(AuthenticationMiddleware, backend=utils.BasicAuthBackend())
+        ]
+        Starlette.__init__(self, routes=[
             Mount('/api', routes=[
+                Route('/register', users.Register, methods=["POST"]),
                 Route('/login', users.LogIn, methods=["POST"]),
-                Route('/', example.homepage),
-                Route('/registration-complete', example.send_by_email_after_registration)
+                Route("/check_user", endpoint=users.check_user, methods=["GET"]),
+                Route("/exit", endpoint=users.exit, methods=["GET"]),
             ])
-        ])
+        ], middleware=middleware)
