@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 from starlette.requests import Request
 import logging
@@ -20,7 +21,6 @@ async def JsonParams(request: Request):
         yield params
     except (AttributeError, KeyError, ValueError) as exc:
         msg = f"Bad request parameters. {exc}"
-        print(exc)
         if logging.root.isEnabledFor(logging.DEBUG):
             logging.exception(msg)
         else:
@@ -33,14 +33,22 @@ async def send_by_email_after_registration(request):
     try:
         await a.send_by_email_after_registration("artm-porjad@mail.ru")
     except Exception:
-        return JSONResponse('Сервер не отвечает')
-    return JSONResponse('Спасибо за регистрацию')
+        raise Exception('Server is not available')
+
+
+def get_bool_var(value):
+    if value.upper() in ['Y', 'YES', 'TRUE', '1']:
+        return True
+    elif value.upper() in ['N', 'NO', 'FALSE', '0']:
+        return False
+    else:
+        raise ValueError(f"Invalid value of ${value}")
 
 
 class BasicAuthBackend(AuthenticationBackend):
     async def authenticate(self, request):
-        print(request.cookies)
         if not request.cookies.get('auth'):
             return
         login = request.cookies.get('auth')
         return AuthCredentials(['authenticated']), SimpleUser(login)
+

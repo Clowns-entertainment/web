@@ -1,12 +1,18 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import OverlayButtonFormComponent from './OverlayButtonFormComponent';
 
-function ButtonFormComponent() {
+// @ts-ignore
+function ButtonFormComponent(props) {
+  const target = useRef(null);
   return (
-    <Button variant="primary" type="submit">
-      <FormattedMessage defaultMessage={'{buttontext}'} values={{ buttontext: (chunks: ReactNode) => '{chunks}' }} />
-    </Button>
+    <div>
+      <Button variant="primary" type="submit" ref={target}>
+        <FormattedMessage defaultMessage={'{buttontext}'} values={{ buttontext: (chunks: ReactNode) => '{chunks}' }} />
+      </Button>
+      <OverlayButtonFormComponent target={target} show={props.show} type={props.type} />
+    </div>
   );
 }
 
