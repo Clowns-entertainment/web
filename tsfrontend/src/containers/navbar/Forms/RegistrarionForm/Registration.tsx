@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Form } from 'react-bootstrap';
 import UsernameFormComponent from '../FormComponents/UsernameFormComponent/';
@@ -15,6 +15,8 @@ type Inputs = {
 };
 
 function Registration() {
+  const [show, setShow] = useState(false);
+  const [typeOfMessage, setTypeOfMessage] = useState('');
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     const data = new FormData();
@@ -28,8 +30,17 @@ function Registration() {
       .then((resp) => {
         if (resp.status === 200) {
           console.log('Регистрация прошла успешно');
+          setShow(false);
           document.location.reload();
-        } else {
+        } else if (resp.status === 403) {
+          console.log('EMail занят');
+          setShow(true);
+          setTypeOfMessage('email is taken');
+          console.log(resp.status);
+        } else if (resp.status === 504) {
+          console.log('Соединение с почтовым сервером не установлено, попробуйте позднее');
+          setShow(true);
+          setTypeOfMessage('email server not available');
           console.log(resp.status);
         }
       })
@@ -47,7 +58,7 @@ function Registration() {
         <EmailFormComponent register={register} />
         <UsernameFormComponent register={register} />
         <PasswordFormComponent register={register} />
-        <ButtonFormComponent />
+        <ButtonFormComponent type={typeOfMessage} show={show} />
       </Form>
     );
   }

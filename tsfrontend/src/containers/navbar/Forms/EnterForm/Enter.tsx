@@ -1,25 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import CheckFormComponent from '../FormComponents/CheckFromComponent/';
 import ButtonFormComponent from '../FormComponents/ButtonFromComponent';
-import UsernameFormComponent from '../FormComponents/UsernameFormComponent';
+import EmailFormComponent from '../FormComponents/EmailFromComponent/';
 import PasswordFormComponent from '../FormComponents/PasswordFormComponent';
 import { Navigate } from 'react-router-dom';
 import UserContext from '../../../UserContext/UserContext';
 
 type Inputs = {
-  Nickname: string;
+  Email: string;
   Password: string;
   Check: boolean;
 };
 
 function Enter() {
+  const [typeOfMessage, setTypeOfMessage] = useState('');
+  const [show, setShow] = useState(false);
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formData, event) => {
     const data = new FormData();
     data.append('password', formData['Password']);
-    data.append('nickname', formData['Nickname']);
+    data.append('email', formData['Email']);
     // @ts-ignore
     data.append('remember_me', formData['Check']);
     fetch('/api/login', {
@@ -29,9 +31,18 @@ function Enter() {
       .then((resp) => {
         if (resp.status === 200) {
           console.log('Логин и пароль верны');
+          setShow(false);
           document.location.reload();
+        } else if (resp.status === 403) {
+          console.log('Exception on the server');
+          setShow(true);
+          setTypeOfMessage('exception on the server');
+          console.log(resp.status);
         } else {
           console.log('Логин или пароль не верны');
+          setShow(true);
+          setTypeOfMessage('login or password is not correct');
+          console.log(resp.status);
         }
       })
       .catch((err) => {
@@ -47,10 +58,10 @@ function Enter() {
   else {
     return (
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <UsernameFormComponent register={register} />
+        <EmailFormComponent register={register} />
         <PasswordFormComponent register={register} />
         <CheckFormComponent register={register} />
-        <ButtonFormComponent />
+        <ButtonFormComponent type={typeOfMessage} show={show} />
       </Form>
     );
   }
