@@ -16,7 +16,7 @@ function UsernameFormComponent({ register }) {
       <Form.Control
         type="text"
         placeholder={intlUsername.formatMessage(msgEnterUsername)}
-        {...register('Nickname', { required: true, maxLength: 15, min: 3 })}
+        {...register('Username', { required: true, maxLength: 15, min: 3 })}
       />
     </Form.Group>
   );

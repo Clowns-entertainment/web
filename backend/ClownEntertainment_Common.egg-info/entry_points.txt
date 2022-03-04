@@ -1,0 +1,3 @@
+[console_scripts]
+website = clownentertainment.website:main
+

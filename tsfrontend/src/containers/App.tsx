@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect } from 'react';
 import NavbarView from './navbar/NavbarView';
-import Comment from './content/CommentView/Comment';
+import Comment from './content/mainpage/CommentView/Comment';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Registration from './navbar/Forms/RegistrarionForm';
@@ -9,7 +9,7 @@ import Enter from './navbar/Forms/EnterForm/Enter';
 // import Cookies from 'js-cookie';
 import { UserContext, anonymous } from './UserContext/UserContext';
 import Exit from './navbar/Exit';
-import ContentView from './content/ContentView';
+import ContentView from './content/mainpage/ContentView';
 
 function App() {
   const [user, setUser] = React.useState(anonymous);

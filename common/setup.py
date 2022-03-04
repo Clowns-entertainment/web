@@ -5,15 +5,9 @@ settings = {
     'description': 'ClownEntertainment common',
     'zip_safe': False,
     'include_package_data': True,
-    'packages': find_namespace_packages(include=('.*',)),
-    'entry_points': {
-        'console_scripts': [
-            'website = clownentertainment.website:main'
-        ],
-    },
+    'packages': find_namespace_packages(),
     'install_requires': [
-        'starlette',
-        'uvicorn',
+        'SQLAlchemy',
     ],
 }
 

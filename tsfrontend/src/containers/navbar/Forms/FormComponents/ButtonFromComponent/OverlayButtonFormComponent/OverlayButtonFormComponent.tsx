@@ -41,7 +41,7 @@ function OverlayButtonFormComponent(props) {
             </div>
           )}
         </Overlay>
-      ) : props.type === 'exception on the server' ? (
+      ) : props.type === 'username is taken' ? (
         <Overlay target={props.target.current} show={props.show} placement="right">
           {({ placement, arrowProps, show: _show, popper, ...props }) => (
             <div
@@ -54,7 +54,24 @@ function OverlayButtonFormComponent(props) {
                 ...props.style,
               }}
             >
-              На сервере произошла ошибка, сообщите об ошибке
+              Введенный логин занят
+            </div>
+          )}
+        </Overlay>
+      ) : props.type === 'unexpected error' ? (
+        <Overlay target={props.target.current} show={props.show} placement="right">
+          {({ placement, arrowProps, show: _show, popper, ...props }) => (
+            <div
+              {...props}
+              style={{
+                backgroundColor: 'rgba(255, 100, 100, 0.85)',
+                padding: '2px 10px',
+                color: 'white',
+                borderRadius: 3,
+                ...props.style,
+              }}
+            >
+              Неизвестная ошибка сервера
             </div>
           )}
         </Overlay>

@@ -33,7 +33,7 @@ class NotifierServer():
             MAIL_USERNAME=os.environ["MAIL_USERNAME"],
             MAIL_PASSWORD=os.environ["MAIL_PASSWORD"],
             MAIL_FROM=os.environ["MAIL_FROM"],
-            MAIL_PORT=int(os.environ["MAIL_PORT"]),
+            MAIL_PORT=int(os.environ.get("MAIL_PORT", 587)),
             MAIL_SERVER=os.environ["MAIL_SERVER"],
             MAIL_FROM_NAME=os.environ["MAIL_FROM_NAME"],
             MAIL_TLS=mail_tls,

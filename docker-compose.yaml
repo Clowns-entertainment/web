@@ -6,21 +6,20 @@ networks:
 
 services:
   notifier:
-    environment:
-      PORT: ${PORT-9900}
-      MAIL_USERNAME: ${MAIL_USERNAME}
-      MAIL_PASSWORD: ${MAIL_PASSWORD}
-      MAIL_FROM: ${MAIL_FROM}
-      MAIL_PORT: ${MAIL_PORT-587}
-      MAIL_SERVER: ${MAIL_SERVER}
-      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
-      MAIL_TLS: ${MAIL_TLS-True}
-      MAIL_SSL: ${MAIL_SSL-False}
     build:
       context: .
       dockerfile: system/docker/notifier/Dockerfile
     container_name: clowns-entartainment-notifier
     networks:
       - clowns-entertainment
-    ports:
-      - "${PORT-9900}:${PORT-9900}"
+
+
+  postgresql:
+    image: test/postgresql
+    build:
+      context: .
+      dockerfile: system/docker/postgres/Dockerfile
+    container_name: clowns-entartainment-postgresql
+    command: postgres
+    networks:
+      - clowns-entertainment

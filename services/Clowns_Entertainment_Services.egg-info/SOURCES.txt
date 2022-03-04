@@ -1,8 +1,0 @@
-setup.py
-Clowns_Entertainment_Services.egg-info/PKG-INFO
-Clowns_Entertainment_Services.egg-info/SOURCES.txt
-Clowns_Entertainment_Services.egg-info/dependency_links.txt
-Clowns_Entertainment_Services.egg-info/entry_points.txt
-Clowns_Entertainment_Services.egg-info/not-zip-safe
-Clowns_Entertainment_Services.egg-info/requires.txt
-Clowns_Entertainment_Services.egg-info/top_level.txt
