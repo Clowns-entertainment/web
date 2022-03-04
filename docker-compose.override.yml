@@ -1,0 +1,25 @@
+version: '3.2'
+
+services:
+
+  postgresql:
+    build:
+      args:
+        POSTGRESQL_PASSWORD: 23456
+    restart: 'no'
+    ports:
+      - "5432:5432/tcp"
+
+  notifier:
+    environment:
+        PORT: 9900
+        MAIL_USERNAME: 12312312qwerq@gmail.com
+        MAIL_PASSWORD: 1qaz2wsx.
+        MAIL_FROM: 12312312qwerq@gmail.com
+        MAIL_PORT: 587
+        MAIL_SERVER: smtp.gmail.com
+        MAIL_FROM_NAME: Clowns Entertainment
+        MAIL_TLS: 1
+        MAIL_SSL: 0
+    ports:
+      - "9900:9900"

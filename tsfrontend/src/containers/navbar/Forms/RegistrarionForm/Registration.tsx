@@ -10,7 +10,7 @@ import { Navigate } from 'react-router-dom';
 
 type Inputs = {
   Email: string;
-  Nickname: string;
+  Username: string;
   Password: string;
 };
 
@@ -22,26 +22,27 @@ function Registration() {
     const data = new FormData();
     data.append('email', formData['Email']);
     data.append('password', formData['Password']);
-    data.append('nickname', formData['Nickname']);
+    data.append('username', formData['Username']);
     fetch('/api/register', {
       method: 'POST',
       body: data,
     })
       .then((resp) => {
         if (resp.status === 200) {
-          console.log('Регистрация прошла успешно');
           setShow(false);
           document.location.reload();
         } else if (resp.status === 403) {
-          console.log('EMail занят');
           setShow(true);
           setTypeOfMessage('email is taken');
-          console.log(resp.status);
         } else if (resp.status === 504) {
-          console.log('Соединение с почтовым сервером не установлено, попробуйте позднее');
           setShow(true);
           setTypeOfMessage('email server not available');
-          console.log(resp.status);
+        } else if (resp.status === 409) {
+          setShow(true);
+          setTypeOfMessage('username is taken');
+        } else if (resp.status === 410) {
+          setShow(true);
+          setTypeOfMessage('unexpected error');
         }
       })
       .catch((err) => {

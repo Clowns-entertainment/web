@@ -1,8 +1,8 @@
 from setuptools import setup, find_namespace_packages
 
 settings = {
-    'name': 'Clowns-Entertainment-Services',
-    'description': 'Clowns entertainment services',
+    'name': 'ClownEnterteinment-Common',
+    'description': 'ClownEnterteinment common',
     'zip_safe': False,
     'include_package_data': True,
     'packages': find_namespace_packages(include=('.*',)),

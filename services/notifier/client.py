@@ -39,7 +39,6 @@ if __name__ == "__main__":
 
     async def run_all():
         a = notifier.client.NotificationClient(port=9900, host='localhost')
-        await a.send_by_email_after_registration("artm-porjad@mail.ru")
 
 
     asyncio.run(run_all())

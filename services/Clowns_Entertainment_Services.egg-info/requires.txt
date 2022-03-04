@@ -1,3 +1,0 @@
-pyzmq
-zmq
-fastapi_mail

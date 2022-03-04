@@ -30,19 +30,14 @@ function Enter() {
     })
       .then((resp) => {
         if (resp.status === 200) {
-          console.log('Логин и пароль верны');
           setShow(false);
           document.location.reload();
         } else if (resp.status === 403) {
-          console.log('Exception on the server');
-          setShow(true);
-          setTypeOfMessage('exception on the server');
-          console.log(resp.status);
-        } else {
-          console.log('Логин или пароль не верны');
           setShow(true);
           setTypeOfMessage('login or password is not correct');
-          console.log(resp.status);
+        } else if (resp.status === 410) {
+          setShow(true);
+          setTypeOfMessage('unexpected error');
         }
       })
       .catch((err) => {
