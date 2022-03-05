@@ -1,6 +1,8 @@
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import React from 'react';
 import UserContext from '../UserContext/UserContext';
+// @ts-ignore
+import Cookies from 'js-cookie';
 
 function NavbarView() {
   // @ts-ignore
@@ -12,6 +14,11 @@ function NavbarView() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
+            {userContext.isAuthorized ? (
+              <Nav.Link href={'/profile/' + Cookies.get('auth')}>Профиль</Nav.Link>
+            ) : (
+              <Nav.Link href="#pricing">1</Nav.Link>
+            )}
             <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
