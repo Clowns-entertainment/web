@@ -22,8 +22,8 @@ class LogIn(HTTPEndpoint):
                 account_check = await session.execute(select(accounts).filter_by(email=email))
                 password_check = await session.execute(select(accounts).filter_by(password=password))
                 if account_check and password_check:
-                    username = await session.fetch_all(accounts.select().where(accounts.c.email == email))
-                    username = username[0]["username"]
+                    username = await session.fetch_one(accounts.select().where(accounts.c.email == email))
+                    username = username["username"]
                     response = JSONResponse()
                     try:
                         query = accounts.update().values(expired=datetime.now()).where(accounts.c.username == username)
@@ -94,3 +94,23 @@ async def exit(request):
     response = Response(status_code=200)
     response.delete_cookie("auth")
     return response
+
+
+@requires('authenticated')
+async def user_info_construct(request):
+    async with JsonParams(request) as params:
+        username = params['username']
+    email = await session.fetch_one(accounts.select().where(accounts.c.username == username))
+    user_data = {
+        "username": username,
+        "email": email["email"]
+    }
+    users_quotes_list = await session.fetch_all(quotes.select().where(quotes.c.username == username))
+    user_quotes = [
+        {
+            "username": quote["username"],
+            "text": quote["text"],
+        }
+        for quote in users_quotes_list
+    ]
+    return JSONResponse([user_data, user_quotes])

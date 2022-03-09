@@ -10,7 +10,6 @@ type propsTypes = {
 export default function CommentView(props: any) {
   return (
     <Col>
-      Collections.reverse(list.clone());
       {props.comments.map((comment: propsTypes, i: number) => {
         return <Comment text={comment.text} username={comment.username} key={i} />;
       })}
