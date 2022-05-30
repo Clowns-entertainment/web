@@ -25,7 +25,8 @@ class Application(Starlette):
                 Route('/online_get', content.online_list_get, methods=["GET"]),
                 Route('/check_user', endpoint=users.check_user, methods=["GET", "POST"]),
                 Route('/exit', endpoint=users.exit, methods=["GET"]),
-                Route("/user_info_construct", endpoint=users.user_info_construct, methods=["GET", "POST"]),
+                Route('/user_info_construct', endpoint=users.user_info_construct, methods=["GET", "POST"]),
+                Route('/search', endpoint=content.search, methods=["POST", "GET"]),
             ], )
         ],
                            on_startup=[database.connect],

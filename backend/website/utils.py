@@ -29,7 +29,7 @@ async def JsonParams(request: Request):
 
 
 async def send_by_email_after_registration(request):
-    a = notifier.client.NotificationClient(port=9900, host='localhost')
+    a = notifier.client.NotificationClient(port=9900, host='notifier')
     try:
         await a.send_by_email_after_registration(request)
     except Exception:

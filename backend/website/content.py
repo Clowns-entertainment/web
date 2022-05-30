@@ -50,3 +50,18 @@ async def online_list_get(request):
         for online in online_list
     ]
     return JSONResponse(online_send)
+
+
+async def search(request):
+    async with JsonParams(request) as params:
+        query = quotes.select().where(quotes.c.text == params['search_str'] or quotes.c.username == params['search_str'])
+        quotes_list = await session.fetch_all(query)
+        quotes_send = [
+            {
+                "username": quote["username"],
+                "text": quote["text"],
+            }
+            for quote in quotes_list
+        ]
+        print(quotes_send)
+        return JSONResponse(quotes_send)

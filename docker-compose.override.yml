@@ -13,7 +13,7 @@ services:
   notifier:
     environment:
         PORT: 9900
-        MAIL_USERNAME: 12312312qwerq@gmail.com
+        MAIL_USERNAME: check.email.sending01@gmail.com
         MAIL_PASSWORD: 1qaz2wsx.
         MAIL_FROM: 12312312qwerq@gmail.com
         MAIL_PORT: 587

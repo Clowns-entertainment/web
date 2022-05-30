@@ -1,9 +1,0 @@
-README.md
-setup.py
-ClownEntertainment_Common.egg-info/PKG-INFO
-ClownEntertainment_Common.egg-info/SOURCES.txt
-ClownEntertainment_Common.egg-info/dependency_links.txt
-ClownEntertainment_Common.egg-info/entry_points.txt
-ClownEntertainment_Common.egg-info/not-zip-safe
-ClownEntertainment_Common.egg-info/requires.txt
-ClownEntertainment_Common.egg-info/top_level.txt

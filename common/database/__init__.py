@@ -1,5 +1,5 @@
-from database.models.bases import metadata
+from common.database.models.bases import metadata
 
-from database.models.dbmodels import Accounts, Quotes
+from common.database.models.dbmodels import Accounts, Quotes
 
 
