@@ -1,25 +1,59 @@
 version: '3.2'
 
 networks:
-  clowns-entertainment:
+  citati:
     external: true
 
 services:
   notifier:
     build:
       context: .
-      dockerfile: system/docker/notifier/Dockerfile
-    container_name: clowns-entartainment-notifier
+      dockerfile: docker/notifier/Dockerfile
+    container_name: notifier
     networks:
-      - clowns-entertainment
+      - citati
 
 
   postgresql:
-    image: test/postgresql
+    image: citati/postgresql
     build:
       context: .
-      dockerfile: system/docker/postgres/Dockerfile
-    container_name: clowns-entartainment-postgresql
+      dockerfile: docker/postgres/Dockerfile
+    container_name: postgresql
     command: postgres
     networks:
-      - clowns-entertainment
+      - citati
+
+#  frontend service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/frontend/Dockerfile
+    container_name: frontend
+    networks:
+      - citati
+    ports:
+      - "3000:3000"
+
+#  backend service
+  backend:
+    depends_on:
+      - "alembic"
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    container_name: backend
+    networks:
+      - citati
+    ports:
+      - "8000:8000"
+
+  alembic:
+    depends_on:
+      - "postgresql"
+    build:
+      context: .
+      dockerfile: docker/alembic/Dockerfile
+    container_name: alembic
+    networks:
+      - citati

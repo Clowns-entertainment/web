@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from starlette.endpoints import HTTPEndpoint
 from starlette.responses import JSONResponse
@@ -92,11 +92,17 @@ async def check_user(request):
 @requires('authenticated')
 async def exit(request):
     response = Response(status_code=200)
+    try:
+        query = accounts.update().values(expired=datetime.now()-timedelta(seconds=300)).where(accounts.c.username == request.user.display_name)
+        await session.execute(query)
+    except Exception as e:
+        print(e.args)
+        return Response(b'Unexpected error', status_code=410)
     response.delete_cookie("auth")
     return response
 
 
-@requires('authenticated')
+
 async def user_info_construct(request):
     async with JsonParams(request) as params:
         username = params['username']
