@@ -10,6 +10,9 @@ $ make
 ```
 or
 ```console
+$ git clone git@github.com:Clowns-entertainment/web.git .
+$ docker-compose build postgresql
+$ docker-compose up -d postgresql
 $ docker-compose build
 $ docker-compose up
 ```

@@ -7,6 +7,8 @@ VENV="${CURDIR}/.venv"
 .PHONY: venv
 
 docker_build:
+	sudo DOCKER_BUILDKIT=1 docker-compose build postgresql
+	sudo docker-compose up -d postgresql
 	sudo DOCKER_BUILDKIT=1 docker-compose build
 	sudo docker-compose up
 
